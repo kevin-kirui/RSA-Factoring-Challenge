@@ -1,26 +1,18 @@
 #!/usr/bin/python3
-import math
-import sys
+from sys import argv
 
-def factorize_number(n):
-    for i in range(2, int(math.sqrt(n)) + 1):
-        if n % i == 0:
-            return i, n // i
-    return None, None
-
-def factorize_file(file_path):
-    with open(file_path, 'r') as file:
-        for line in file:
-            number = int(line.strip())
-            p, q = factorize_number(number)
-            if p is not None and q is not None:
-                print(f"{number}={p}*{q}")
-
-if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: factors <file>")
-        sys.exit(1)
-
-    file_path = sys.argv[1]
-    factorize_file(file_path)
-
+with open(argv[1]) as f:
+    for line in f:
+        num = int(line)
+        print("{:d}=".format(num), end="")
+        if num % 2 == 0:
+            print("{}*2".format(num//2))
+            continue
+        for i in range(3, num, 2):
+            if num % i == 0:
+                factor = num//i
+                for j in range(3, factor, 2):
+                    if factor % j == 0 or i % j == 0:
+                        break
+                print("{}*{}".format(factor, i))
+                break
