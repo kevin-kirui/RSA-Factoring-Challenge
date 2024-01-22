@@ -22,7 +22,22 @@ def factorize_and_print(num):
                 print("{}*{}".format(factor, i))
                 return
 
-with open(sys.argv[1]) as f:
-    for line in f:
-        num = int(line)
-        factorize_and_print(num)
+def main():
+    if len(sys.argv) != 2:
+        print("Usage: python script.py <file>")
+        sys.exit(1)
+
+    file_path = sys.argv[1]
+
+    try:
+        with open(file_path) as f:
+            for line in f:
+                num = int(line)
+                factorize_and_print(num)
+
+    except FileNotFoundError:
+        print(f"File '{file_path}' not found.")
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()
