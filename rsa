@@ -1,0 +1,29 @@
+#!/usr/bin/python3
+from sys import argv
+
+def is_prime(n):
+    if n < 2:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def factorize_and_print(num):
+    print("{:d}=".format(num), end="")
+    if num % 2 == 0:
+        print("{}*2".format(num//2))
+        return
+
+    for i in range(3, num, 2):
+        if num % i == 0 and is_prime(i):
+            factor = num // i
+            if is_prime(factor):
+                print("{}*{}".format(factor, i))
+                return
+
+with open(argv[1]) as f:
+    for line in f:
+        num = int(line)
+        factorize_and_print(num)
+
