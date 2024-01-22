@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from sys import argv
+import sys
 
 def is_prime(n):
     if n < 2:
@@ -22,8 +22,7 @@ def factorize_and_print(num):
                 print("{}*{}".format(factor, i))
                 return
 
-with open(argv[1]) as f:
+with open(sys.argv[1]) as f:
     for line in f:
         num = int(line)
         factorize_and_print(num)
-
