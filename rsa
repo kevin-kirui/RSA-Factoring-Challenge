@@ -1,43 +1,23 @@
 #!/usr/bin/python3
+
 import sys
 
-def is_prime(n):
-    if n < 2:
-        return False
-    for i in range(2, int(n**0.5) + 1):
-        if n % i == 0:
-            return False
-    return True
+def factorize(num):
+    for i in range(2, num):
+        if num % i == 0:
+            return i, num // i
 
-def factorize_and_print(num):
-    print("{:d}=".format(num), end="")
-    if num % 2 == 0:
-        print("{}*2".format(num//2))
-        return
+def main(file_path):
+    with open(file_path, 'r') as file:
+        for line in file:
+            number = int(line.strip())
+            factors = factorize(number)
+            print(f"{number}={factors[0]}*{factors[1]}")
 
-    for i in range(3, num, 2):
-        if num % i == 0 and is_prime(i):
-            factor = num // i
-            if is_prime(factor):
-                print("{}*{}".format(factor, i))
-                return
-
-def main():
+if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print("Usage: python script.py <file>")
+        print("Usage: ./factors.py <file>")
         sys.exit(1)
 
     file_path = sys.argv[1]
-
-    try:
-        with open(file_path) as f:
-            for line in f:
-                num = int(line)
-                factorize_and_print(num)
-
-    except FileNotFoundError:
-        print(f"File '{file_path}' not found.")
-        sys.exit(1)
-
-if __name__ == "__main__":
-    main()
+    main(file_path)
